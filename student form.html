@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input[type="text"], input[type="number"], input[type="email"], select {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        .form-control {
+            margin: 10px 0;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table th, table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+        table th {
+            background-color: #f2f2f2;
+        }
+        .delete-btn {
+            background-color: red;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        .delete-btn:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Student Form</h2>
+    <form id="studentForm">
+        <div class="form-control">
+            <label>Name:</label>
+            <input type="text" id="name" required>
+        </div>
+        <div class="form-control">
+            <label>Age:</label>
+            <input type="number" id="age" required>
+        </div>
+        <div class="form-control">
+            <label>Gender:</label>
+            <input type="radio" id="male" name="gender" value="Male" required> Male
+            <input type="radio" id="female" name="gender" value="Female"> Female
+        </div>
+        <div class="form-control">
+            <label>Course:</label>
+            <select id="course" required>
+                <option value="Python">Python</option>
+                <option value="Java">Java</option>
+                <option value="Javascript">Javascript</option>
+                <option value="Data science">Data Science</option>
+                <option value="PowerBi">PowerBi</option>
+                
+            </select>
+        </div>
+        <div class="form-control">
+            <label>Email:</label>
+            <input type="email" id="email" required>
+        </div>
+        <button type="submit">Save</button>
+    </form>
+
+    <table id="studentTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Course</th>
+                <th>Gender</th>
+                <th>Email</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+<script>
+    // Getting the form and table elements
+    const form = document.getElementById('studentForm');
+    const studentTable = document.querySelector('#studentTable tbody');
+
+    // Adding event listener for form submission
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();  // Prevents the form from refreshing the page
+
+        // Getting input values
+        const name = document.getElementById('name').value;
+        const age = document.getElementById('age').value;
+        const gender = document.querySelector('input[name="gender"]:checked').value;
+        const course = document.getElementById('course').value;
+        const email = document.getElementById('email').value;
+
+        // Creating a new row
+        const newRow = document.createElement('tr');
+
+        // Adding the values to the new row
+        newRow.innerHTML = `
+            <td>${name}</td>
+            <td>${age}</td>
+            <td>${course}</td>
+            <td>${gender}</td>
+            <td>${email}</td>
+            <td><button class="delete-btn">Delete</button></td>
+        `;
+
+        // Appending the row to the table
+        studentTable.appendChild(newRow);
+
+        // Clearing form inputs
+        form.reset();
+
+        // delete the row
+        const deleteButton = newRow.querySelector('.delete-btn');
+        deleteButton.addEventListener('click', function() {
+            studentTable.removeChild(newRow);
+        });
+    });
+</script>
+
+</body>
+</html>
